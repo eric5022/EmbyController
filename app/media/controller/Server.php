@@ -651,7 +651,7 @@ class Server extends BaseController
             $embyUserModel = new EmbyUserModel();
             $embyUser = $embyUserModel->where('userId', Session::get('r_user')->id)->find();
             // 如果用户余额大于等于10
-            if ($user->rCoin >= 10) {
+            if ($user->rCoin >= 12) {
                 $activateTo = $embyUser['activateTo'];
                 if ($activateTo == null) {
                     return json([
@@ -666,13 +666,13 @@ class Server extends BaseController
                 }
                 $embyUser->activateTo = $activateTo;
                 $embyUser->save();
-                $user->rCoin = $user->rCoin - 10;
+                $user->rCoin = $user->rCoin - 12;
                 $user->save();
                 $financeRecordModel = new FinanceRecordModel();
                 $financeRecordModel->save([
                     'userId' => Session::get('r_user')->id,
                     'action' => 3,
-                    'count' => 10,
+                    'count' => 12,
                     'recordInfo' => [
                         'message' => '使用余额续期Emby账号'
                     ]
